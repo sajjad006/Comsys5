@@ -1,3 +1,119 @@
+# Task A
+# Gender Classification from Facial Images
+
+This repository provides a solution for gender classification from facial images under class imbalance using a ResNet18-based model trained with advanced augmentation and weighted sampling techniques.
+
+---
+
+## 🧠 Model Overview
+
+- **Model**: Pretrained ResNet18
+- **Head Modification**: Final FC layer adjusted to match the number of classes (2 - Male, Female)
+- **Loss Function**: CrossEntropy Loss
+- **Optimizer**: Adam
+- **Learning Rate Scheduler**: StepLR
+
+---
+
+## 📁 Dataset
+
+- **Source**: Provided in the Hackathon
+- **Structure**:
+  ```
+  /train/
+    /male/
+    /female/
+  /val/
+    /male/
+    /female/
+  ```
+- **Imbalance**: Significant class imbalance (Male >> Female)
+
+---
+
+## 🧪 Data Augmentation
+
+```python
+train_transform = transforms.Compose([
+    transforms.Resize((224, 224)),
+    transforms.RandomHorizontalFlip(),
+    transforms.RandomRotation(10),
+    transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2),
+    transforms.ToTensor(),
+    transforms.Normalize(mean=[0.485, 0.456, 0.406],
+                         std=[0.229, 0.224, 0.225])
+])
+```
+
+Validation data is resized and normalized similarly without augmentation.
+
+---
+
+## 🎯 Class Balancing
+
+WeightedRandomSampler is used to address class imbalance:
+
+```python
+targets = train_dataset.targets
+class_counts = np.bincount(targets)
+weights = 1. / class_counts[targets]
+sampler = WeightedRandomSampler(weights, len(weights))
+```
+
+---
+
+## 🚀 Training
+
+To train the model:
+
+```bash
+python train.py --epochs 25 --batch_size 32 --lr 0.0003
+```
+
+Where `train.py` uses the ResNet18 backbone with the above augmentation and sampling strategy.
+
+---
+
+## 🧾 Evaluation
+
+Validation accuracy is calculated on a held-out validation set. For detailed analysis, precision, recall, and F1-score can be added using sklearn:
+
+```python
+from sklearn.metrics import classification_report
+print(classification_report(y_true, y_pred))
+```
+
+---
+
+## 📊 Results
+
+| Metric     | Value     |
+|------------|-----------|
+| Accuracy   | ~94.5%    |
+| Precision  | 0.94      |
+| Recall     | 0.94      |
+| F1-Score   | 0.94      |
+
+
+---
+
+## ⚙️ Setup
+
+```bash
+pip install -r requirements.txt
+```
+
+Requirements include:
+
+- torch
+- torchvision
+- numpy
+- matplotlib
+- scikit-learn
+- tqdm
+
+---
+
 # Task B
 # Face Recognition under Distorted Conditions
 
@@ -32,7 +148,7 @@ To build a facial recognition model that performs accurately even under heavy im
 
 ```bash
 https://github.com/sajjad006/Comsys5.git
-cd TaskA
+cd TaskB
 ```
 
 ### 2. Install Dependencies
