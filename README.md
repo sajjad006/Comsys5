@@ -7,11 +7,11 @@ This repository provides a solution for gender classification from facial images
 
 ## 🧠 Model Overview
 
-- **Model**: Pretrained ResNet18
-- **Head Modification**: Final FC layer adjusted to match the number of classes (2 - Male, Female)
-- **Loss Function**: CrossEntropy Loss
+- **Model**:  Pretrained ConvNeXt-Base
+- **Head Modification**: Final classifier layer replaced with a single output neuron for binary classification (Male vs. Female)
+- **Loss Function**: BCEWithLogitsLoss with pos_weight to handle class imbalance
 - **Optimizer**: Adam
-- **Learning Rate Scheduler**: StepLR
+- **Class Balancing**: WeightedRandomSampler based on inverse class frequencies
 
 ---
 
