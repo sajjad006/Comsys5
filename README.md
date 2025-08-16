@@ -85,14 +85,14 @@ print(classification_report(y_true, y_pred))
 
 ---
 
-## 📊 Results
+## 📊 Results (Validation Set)
 
 | Metric     | Value     |
 |------------|-----------|
-| Accuracy   | ~94.5%    |
-| Precision  | 0.94      |
-| Recall     | 0.94      |
-| F1-Score   | 0.94      |
+| Accuracy   | 0.9336    |
+| Precision  | 0.9758    |
+| Recall     | 0.9417    |
+| F1-Score   | 0.9585    |
 
 
 ---
